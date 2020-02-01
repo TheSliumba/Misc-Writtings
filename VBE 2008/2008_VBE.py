@@ -13,33 +13,40 @@ class Bus:
     def skaiciuoti(self):
         k = 0
         for i in self.marsrutas:
-            if i in self.stat:
-                self.stat[i] += int(self.keleiviai[k])
+            if int(i) in self.stat:
+                self.stat[int(i)] += int(self.keleiviai[k])
             else:
-                self.stat[i] = int(self.keleiviai[k])
+                self.stat[int(i)] = int(self.keleiviai[k])
             k+=1
 
     def islipo(self):
         k = 0
         for i in self.marsrutas:
-            if i in self.islipe:
-                if int(self.keleiviai[k]) <= 0:
-                    self.islipe[i] += int(self.keleiviai[k])
+            if int(i) in self.islipe:
+                if int(self.keleiviai[k]) < 0:
+                    self.islipe[int(i)] += int(self.keleiviai[k])
+            elif int(self.keleiviai[k]) < 0:
+                    self.islipe[int(i)] = int(self.keleiviai[k])
             else:
-                if int(self.keleiviai[k]) <= 0:
-                    self.islipe[i] = int(self.keleiviai[k])
+                self.islipe[int(i)] = 0
             k += 1
 
     def ilipo(self):
         k=0
         for i in self.marsrutas:
-            if i in self.ilipe:
+            if int(i) in self.ilipe:
                 if int(self.keleiviai[k]) > 0:
-                    self.ilipe[i] += int(self.keleiviai[k])
+                    self.ilipe[int(i)] += int(self.keleiviai[k])
+            elif int(self.keleiviai[k]) > 0:
+                self.ilipe[int(i)] = int(self.keleiviai[k])
             else:
-                if int(self.keleiviai[k]) > 0:
-                    self.ilipe[i] = int(self.keleiviai[k])
+                self.ilipe[int(i)] = 0
             k += 1
+
+    def israryt(self):
+        for k,v in sorted(self.stat.items(),key=lambda x:[x]):
+            print(f'Marsrutas: {k}, Išlipo: {self.islipe[k]}, Įlipo: {self.ilipe[k]}, Netto rezultatas: {v}')
+
 
 with open("U1.txt") as f:
     duomenys = list(f)
@@ -58,3 +65,4 @@ busai.ilipo()
 print(f'Suskaičiuoti bendro keleiviai: {busai.stat}')
 print(f'Suskaičiuoti išlipę keleiviai: {busai.islipe}')
 print(f'Suskaičiuoti įlipę keleiviai: {busai.ilipe}')
+busai.israryt()
