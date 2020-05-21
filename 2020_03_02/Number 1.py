@@ -1,8 +1,9 @@
-'''
+"""
 Trying for the n-th time to write a working roman numeral converter without outside help
-'''
+"""
 
-def convert_to_roman(number:int):
+
+def convert_to_roman(number: int):
     """
     Put in an integer and gaze upon the wonders of roman numerals
 
